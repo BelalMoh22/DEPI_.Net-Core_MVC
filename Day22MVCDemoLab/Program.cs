@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Day22MVCDemoLab
 {
     public class Program
@@ -5,6 +7,10 @@ namespace Day22MVCDemoLab
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Add DbContext service
+            builder.Services.AddDbContext<Data.MVCDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

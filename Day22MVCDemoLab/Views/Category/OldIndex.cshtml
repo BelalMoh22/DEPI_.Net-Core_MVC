@@ -1,0 +1,68 @@
+﻿<style>
+h1 {color : red;}
+</style>
+
+<h1>Welcome in Category</h1>
+
+
+@* <script>
+    alert("Welcome in View");
+</script> *@
+
+@* Razor Syntax *@
+@*
+    comment
+*@
+
+@{
+   //Block of Code
+    int x = 6;
+    int y = 100;
+    x++;
+    string email = "sout@yahoo.com";
+    <h1>@@yahoo.com</h1>
+    <text>Sout@yahoo.com</text>
+}
+<p>X is @x</p>
+<p>Result @(x+y)</p>
+<p>Email : Sout@yahoo.com</p>
+
+@* liner code *@
+@if (x > y)
+{
+    <h1>@x</h1>
+}else
+{
+    <h1>@y</h1>
+}
+<ul>
+@for(int i = 0; i < 10; i++)
+{
+    <li>@i</li>
+}
+</ul>
+<hr />
+@* ------------------------------------------------------------------------------------- *@
+@* Strongly Typed View *@
+@model List<Category>
+<h2>List Of Category</h2>
+<a href="#">Create</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>@item.CategoryId</td>
+            <td>@item.Name</td>
+            <td>@item.Description</td>
+            <td><a href="#" class="btn btn-primary">Details</a></td>
+            <td><a href="#" class="btn btn-success">Edit</a></td>
+            <td><a href="#" class="btn btn-danger">Delete</a></td>
+        </tr>
+    }
+</table>
+
