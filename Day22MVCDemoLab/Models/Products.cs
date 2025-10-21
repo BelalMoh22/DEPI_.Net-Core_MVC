@@ -20,14 +20,14 @@ namespace Day22MVCDemoLab.Models
         public string? Description { get; set; }
 
         [NotMapped] // This property is not mapped to the database
-        public byte[] Image { get; set; }
+        public byte[]? Image { get; set; }
 
         [MaxLength(255)]
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
 
         [ForeignKey("Category")] // Specify the foreign key relationship
         public int CategoryId { get; set; } // FK
 
-        public Category Category { get; set; } // Navigation property
+        public Category? Category { get; set; } // Navigation property
     }
 }

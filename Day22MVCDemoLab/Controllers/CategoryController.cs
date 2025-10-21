@@ -48,15 +48,25 @@ namespace Day22MVCDemoLab.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Category category)
         {
-            if (!ModelState.IsValid)
+            try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(category);
+                }
+                _context.Categories.Add(category);
+                _context.SaveChanges();
+                TempData["SuccessMessage"] = "Category created successfully!";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error creating category: {ex.Message}";
                 return View(category);
             }
-            _context.Categories.Add(category);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         // Edit 
