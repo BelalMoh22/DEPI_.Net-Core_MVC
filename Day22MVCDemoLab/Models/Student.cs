@@ -1,4 +1,4 @@
-﻿namespace Day22MVCDemoLab.Models
+﻿namespace MVCDemoLabpart1.Models
 {
     public class Student
     {

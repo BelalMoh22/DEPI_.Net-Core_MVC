@@ -1,5 +1,5 @@
-﻿using Day22MVCDemoLab.Data;
-using Day22MVCDemoLab.Models;
+﻿using MVCDemoLabpart1.Data;
+using MVCDemoLabpart1.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MVCDemoLabpart1.Controllers
@@ -36,6 +36,7 @@ namespace MVCDemoLabpart1.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken] // to prevent CSRF attacks where malicious sites try to post data to your site without user consent
         public ActionResult Create(Category newCategory)
         {
             if (!ModelState.IsValid)

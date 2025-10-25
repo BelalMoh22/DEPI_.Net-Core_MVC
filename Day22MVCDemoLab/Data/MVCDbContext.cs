@@ -1,7 +1,7 @@
-﻿using Day22MVCDemoLab.Models;
+﻿using MVCDemoLabpart1.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Day22MVCDemoLab.Data
+namespace MVCDemoLabpart1.Data
 {
     public class MVCDbContext : DbContext // Inherit from DbContext
     {
@@ -17,5 +17,6 @@ namespace Day22MVCDemoLab.Data
 
         public DbSet<Category> Categories { get; set; } // DbSet for Categories
         public DbSet<Products> Products { get; set; } // DbSet for Products
+        public DbSet<User> Users { get; set; } // DbSet for Users
     }
 }

@@ -1,8 +1,8 @@
 using System.Diagnostics;
-using Day22MVCDemoLab.Models;
+using MVCDemoLabpart1.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Day22MVCDemoLab.Controllers
+namespace MVCDemoLabpart1.Controllers
 {
     public class HomeController : Controller
     {

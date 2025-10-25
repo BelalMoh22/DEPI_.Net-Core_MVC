@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Day22MVCDemoLab.Data;
-using Day22MVCDemoLab.Models;
+using MVCDemoLabpart1.Data;
+using MVCDemoLabpart1.Models;
 
 namespace MVCDemoLabpart1.Controllers
 {
@@ -57,7 +57,9 @@ namespace MVCDemoLabpart1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Products products) //[Bind("ProductId,Name,Price,Description,ImagePath,CategoryId")] 
+
+        //public async Task<IActionResult> Create([Bind("ProductId,Name,Price,Description,ImagePath,CategoryId")] Products products)
+        public async Task<IActionResult> Create([ModelBinder(typeof(ProductBinder))] Products products) 
         {
             if (ModelState.IsValid)
             {

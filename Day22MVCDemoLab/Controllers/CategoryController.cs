@@ -1,9 +1,9 @@
-﻿using Day22MVCDemoLab.Data;
-using Day22MVCDemoLab.Models;
+﻿using MVCDemoLabpart1.Data;
+using MVCDemoLabpart1.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Day22MVCDemoLab.Controllers
+namespace MVCDemoLabpart1.Controllers
 {
     /*
      -Restful conventions for controllers:

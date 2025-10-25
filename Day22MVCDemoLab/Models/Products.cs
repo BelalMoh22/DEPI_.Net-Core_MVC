@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Day22MVCDemoLab.Models
+namespace MVCDemoLabpart1.Models
 {
     public class Products
     {

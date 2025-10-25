@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Day22MVCDemoLab.Migrations
+namespace MVCDemoLabpart1.Migrations
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration

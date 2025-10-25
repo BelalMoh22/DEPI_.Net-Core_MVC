@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Day22MVCDemoLab
+namespace MVCDemoLabpart1
 {
     public class Program
     {
@@ -33,7 +33,9 @@ namespace Day22MVCDemoLab
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
+                //pattern: "{controller=Users}/{action=Login}/{id?}")
+                pattern: "{controller=Sites}/{action=Index}/{id?}")
+                //pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
             app.Run();

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Day22MVCDemoLab.Models
+namespace MVCDemoLabpart1.Models
 {
     public class Category
     {
