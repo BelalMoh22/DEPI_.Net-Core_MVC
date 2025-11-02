@@ -6,6 +6,7 @@ namespace MVCDemoLabpart1
     {
         public static void Main(string[] args)
         {
+            // Registering the WebApplication builder(Service container)
             var builder = WebApplication.CreateBuilder(args);
 
             // Add DbContext service
@@ -17,28 +18,80 @@ namespace MVCDemoLabpart1
 
             var app = builder.Build();
 
+            //Middleware :  it is a software that is assembled into an application pipeline to handle requests and responses.
+
+            // Note : Any thing in middleware functions start with Use means that it execute some code and then call the next middleware in the pipeline.
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseHsts(); // Adds HTTP Strict Transport Security (HSTS) headers to responses.
             }
 
-            app.UseHttpsRedirection();
-            app.UseRouting(); 
+            app.UseHttpsRedirection(); // Redirects HTTP requests to HTTPS.
+            app.UseRouting(); // Adds route matching to the middleware pipeline.
 
-            app.UseAuthorization();
+            app.UseAuthorization(); // Adds authorization capabilities to the middleware pipeline.
 
-            app.MapStaticAssets();
-            app.MapControllerRoute(
+            // Any thing in middleware functions start with Map means that it is take a specified path and then execute some code.
+            app.MapStaticAssets(); // Custom extension method to map static assets (access files that in the wwwroot folder)
+
+            app.MapControllerRoute( // Defines a route for controller actions
                 name: "default",
                 //pattern: "{controller=Users}/{action=Login}/{id?}")
                 pattern: "{controller=Sites}/{action=Index}/{id?}")
                 //pattern: "{controller=Home}/{action=Index}/{id?}")
-                .WithStaticAssets();
+                .WithStaticAssets(); // Custom extension method to associate static assets with the route
 
-            app.Run();
+            #region Custom Middleware
+            //// Use
+            //app.Use(async (HttpContext, next) =>
+            //{
+            //    // Custom Middleware logic before the next middleware
+            //    await HttpContext.Response.WriteAsync("1) Write From MiddleWare Request....\n");
+            //    await next.Invoke(); // Call the next middleware in the pipeline
+
+            //    // When RollBack As Response  : here it will not execute the below line it first go to the next middleware and after that it will come back to this middleware and execute the below line.
+            //    await HttpContext.Response.WriteAsync("5) Write From MiddleWare Response....\n");
+            //});
+
+            //app.Use(async (HttpContext, next) =>
+            //{
+            //    // Custom Middleware logic before the next middleware
+            //    await HttpContext.Response.WriteAsync("2) Write From MiddleWare Request....\n");
+            //    await next(); // Call the next middleware in the pipeline
+
+            //    // When RollBack As Response  : here it will not execute the below line it first go to the next middleware and after that it will come back to this middleware and execute the below line.
+            //    await HttpContext.Response.WriteAsync("4) Write From MiddleWare Response....\n");
+            //});
+            ////Map
+            //app.Map("/Home/Index", apiApp =>
+            //{
+            //    apiApp.Use(async (context, next) => // context represents the HttpContext for the current request
+            //    {
+            //        // Custom Middleware logic before the next middleware
+            //        await context.Response.WriteAsync(" Request Mapped Middleware for /Home/Index Path\n");
+            //        await next(); // Call the next middleware in the pipeline
+            //        await context.Response.WriteAsync(" Response Mapped Middleware for /Home/Index Path\n");
+            //    });
+            //    apiApp.Run(async context =>
+            //    {
+            //        // Terminal Middleware logic for the mapped path
+            //        await context.Response.WriteAsync("Request Running Terminal Mapped Middleware for /Home/Index Path\n");
+            //    }); // This Run will be the terminal middleware for this mapped path not the run below 
+            //});
+
+            //// Terminal Middleware (Run)
+            //app.Run(async (HttpContext) =>
+            //{
+            //    // Custom Middleware logic before the next middleware
+            //    await HttpContext.Response.WriteAsync("3)Running Write From MiddleWare Request....\n");
+            //});
+            #endregion
+
+            // Any thing in middleware functions start with Run means that it is the terminal middleware in the pipeline.
+            app.Run(); // Runs the application
         }
     }
 }

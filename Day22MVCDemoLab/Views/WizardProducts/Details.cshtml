@@ -32,7 +32,8 @@
             @Html.DisplayNameFor(model => model.ImagePath)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImagePath)
+            @* @Html.DisplayFor(model => model.ImagePath) *@
+            <img src="@Url.Content("~/images/products/" + (Model.ImagePath == "" ? "default.png" : Model.ImagePath))" alt="@Model.Name" width="150" height="150" />
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Category)

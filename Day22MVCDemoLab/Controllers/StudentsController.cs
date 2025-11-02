@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVCDemoLabpart1.Models;
+
 namespace MVCDemoLabpart1.Controllers
 {
     public class StudentsController : Controller

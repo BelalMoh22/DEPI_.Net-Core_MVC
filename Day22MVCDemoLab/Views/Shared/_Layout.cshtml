@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Day22MVCDemoLab.styles.css" asp-append-version="true" />
+    @RenderSection("MyStyles", required: false)
 </head>
 <body>
     <header>
@@ -58,5 +59,12 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("MyScripts", required: false)
+    @*
+        RenderSection is used to render a section defined in a view.
+        RenderBody is used to render the main content of the view.
+        - RenderBody is called only once in the layout.
+        - RenderSection can be called multiple times in the layout.
+    *@
 </body>
-</html>
+</html>   

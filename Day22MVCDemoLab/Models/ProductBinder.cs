@@ -13,7 +13,15 @@ namespace MVCDemoLabpart1.Models
             string ImagePath = bindingContext.HttpContext.Request.Form["ImagePath"];
             string CategoryId = bindingContext.HttpContext.Request.Form["CategoryId"];
 
-            //create New Price 
+            //Check CategoryId
+            //if (string.IsNullOrEmpty(CategoryId) || CategoryId == "0")
+            //{
+            //    bindingContext.ModelState.AddModelError("CategoryId", "Please select a valid category.");
+            //    //bindingContext.Result = ModelBindingResult.Failed(); // Indicate failure
+            //    //return Task.CompletedTask; // Return early 
+            //}
+
+            //Create New Price 
             decimal newPrice = Convert.ToDecimal(Price) + (Convert.ToDecimal(Price) * 0.1M);
             int Id;
             int.TryParse(ProductId, out Id);
@@ -25,7 +33,7 @@ namespace MVCDemoLabpart1.Models
                 Description = Description,
                 ImagePath = ImagePath ?? string.Empty,
                 CategoryId = int.Parse(CategoryId)
-            };
+            }; 
             bindingContext.Result = ModelBindingResult.Success(newProduct);
             return Task.CompletedTask;
         }

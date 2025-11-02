@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">  @* Here I make the enctype to multipart/form-data  due to file uploads *@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -27,20 +27,27 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            @* <div class="form-group">
+            <div class="form-group">
                 <label asp-for="ImagePath" class="control-label"></label>
-                <input asp-for="ImagePath" class="form-control" />
-                <span asp-validation-for="ImagePath" class="text-danger"></span>
-            </div> *@
+                <input type="file" asp-for="ImagePath" id="photoInput" class="form-control" accept="image/*" />
+            </div>
+            <div class="mt-2">
+                <img id="photoPreview" src="#" alt="Image Preview"
+                     style="width: 100px; height: 100px; display: none;
+                border: 1px solid #ddd; border-radius: 6px; padding: 5px;" />
+            </div>
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId">
+                    <option value="0">-- Select Category --</option>
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
-    </div>
+    </div> 
 </div>
 
 <div>
@@ -48,5 +55,57 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+@* Task1 : Check if option of CategoryId > 0  *@
+    <script>
+        $(function () {
+            const form = $("form");
+            const categorySelect = $("#CategoryId");
+            const validationSpan = $("span[data-valmsg-for='CategoryId']");
+
+            // On form submit
+            form.on("submit", function (e) {
+                if (parseInt(categorySelect.val()) === 0) {
+                    e.preventDefault();
+                    validationSpan
+                        .addClass("field-validation-error")
+                        .removeClass("field-validation-valid")
+                        .text("Please select a category.");
+                } else {
+                    validationSpan
+                        .addClass("field-validation-valid")
+                        .removeClass("field-validation-error")
+                        .text("");
+                }
+            });
+
+            // On category change (live validation)
+            categorySelect.on("change", function () {
+                if (parseInt($(this).val()) > 0) {
+                    validationSpan
+                        .addClass("field-validation-valid")
+                        .removeClass("field-validation-error")
+                        .text("");
+                }
+            });
+        });
+        @* Task 2 PhotoPreview *@
+           // 🔸 Image preview logic
+            $("#photoInput").on("change", function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#photoPreview")
+                            .attr("src", e.target.result)
+                            .show();
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    $("#photoPreview").hide();
+                }
+            });
+    </script>
 }
