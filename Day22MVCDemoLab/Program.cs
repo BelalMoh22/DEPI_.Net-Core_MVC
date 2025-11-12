@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+ using Microsoft.EntityFrameworkCore;
 
 namespace MVCDemoLabpart1
 {
@@ -15,10 +15,18 @@ namespace MVCDemoLabpart1
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+           // builder.Services.AddRazorPages().AddSessionStateTempDataProvider(); // To use TempData with session state provider by default Razor Pages use cookie based TempData provider
+           // builder.Services.AddControllersWithViews().AddSessionStateTempDataProvider(); // To use TempData with session state provider by default MVC use cookie based TempData provider
+            builder.Services.AddSession(config =>
+            {
+                config.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout default is 20 minutes
+            });
 
             var app = builder.Build();
 
             //Middleware :  it is a software that is assembled into an application pipeline to handle requests and responses.
+            // Add this line BEFORE app.UseRouting() or app.MapControllers()
+            //app.UseMiddleware<CookieAutoExtendMiddleware>();
 
             // Note : Any thing in middleware functions start with Use means that it execute some code and then call the next middleware in the pipeline.
             // Configure the HTTP request pipeline.
@@ -34,13 +42,17 @@ namespace MVCDemoLabpart1
 
             app.UseAuthorization(); // Adds authorization capabilities to the middleware pipeline.
 
+            // Session : it is a way to store user data while the user is browsing your web application where the data is stored on the server and a unique identifier is sent to the client as a cookie.
+            app.UseSession(); // Enables session state for the application.
+
             // Any thing in middleware functions start with Map means that it is take a specified path and then execute some code.
             app.MapStaticAssets(); // Custom extension method to map static assets (access files that in the wwwroot folder)
 
             app.MapControllerRoute( // Defines a route for controller actions
                 name: "default",
                 //pattern: "{controller=Users}/{action=Login}/{id?}")
-                pattern: "{controller=Sites}/{action=Index}/{id?}")
+                //pattern: "{controller=Sites}/{action=Index}/{id:int?}/{Name:alpha?}")
+                pattern: "{controller=Sites}/{action=Index}/{id:int?}")
                 //pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets(); // Custom extension method to associate static assets with the route
 

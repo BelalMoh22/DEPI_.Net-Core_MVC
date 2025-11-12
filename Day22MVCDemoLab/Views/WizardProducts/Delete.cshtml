@@ -44,7 +44,7 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="ProductId" />
+        <input type="hidden" asp-for="ProductId" /> @*Hidden Field for ProductId : it is used to identify the product to be deleted without displaying it to the user *@
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

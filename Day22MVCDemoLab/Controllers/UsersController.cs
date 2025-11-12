@@ -34,6 +34,7 @@ namespace MVCDemoLabpart1.Controllers
                 ViewBag.ErrorLogin = "Invalid username or password";
                 return View(user);
             }
+            Response.Cookies.Append("UserName", user.UserName);
             // If successful, redirect to a different action
             return RedirectToAction("Index", controllerName: "Sites");
         }

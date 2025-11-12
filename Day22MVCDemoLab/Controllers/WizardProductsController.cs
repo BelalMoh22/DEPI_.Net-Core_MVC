@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,13 @@ namespace MVCDemoLabpart1.Controllers
 {
     public class WizardProductsController : Controller
     {
+        // TempData Attribute to hold messages
+        // Note : TempData uses only in MVC Controllers and Razor Pages Not in API Controllers
+        [TempData]
+        public string MessageAdd { get; set; }
+        [TempData]
+        public string MessageDelete { get; set; }
+
         private readonly MVCDbContext _context;
 
         public WizardProductsController(MVCDbContext context)
@@ -96,12 +104,13 @@ namespace MVCDemoLabpart1.Controllers
             // or 
 
             // Upload the photo file
-            //Naming File on the server is important to avoid overwriting files with same name
-            string _Extenstion = Path.GetExtension(ImagePath.FileName);  //.jpg
-            string _fileName = DateTime.Now.ToString("yyMMddhhssfff") + _Extenstion;
+            string _fileName = string.Empty;
             if (ImagePath != null && ImagePath.Length > 0) // Here we will handle the file upload and saving the productImage in wwwroot/images/products
             {
                 //~
+                //Naming File on the server is important to avoid overwriting files with same name
+                string _Extenstion = Path.GetExtension(ImagePath?.FileName);  //.jpg
+                _fileName = DateTime.Now.ToString("yyMMddhhssfff") + _Extenstion;
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Products", _fileName);
                  
                 using (var stream = new FileStream(filePath, FileMode.Create))
@@ -110,12 +119,21 @@ namespace MVCDemoLabpart1.Controllers
                 }
                 product.ImagePath = _fileName;
             }
+            else
+            {
+                // Optional: assign a default image if no file was uploaded
+                product.ImagePath = "default.png"; // <-- or leave it null if not needed
+                ModelState.Remove("ImagePath"); // 👈 clear model validation for missing image
+            }
             try
             {
                 if (ModelState.IsValid)
                 {
                     _context.Add(product);
                     await _context.SaveChangesAsync();
+                    // Set TempData message
+                    MessageAdd = $"Product {product.Name} added...";
+                    TempData.Keep(nameof(MessageAdd)); // nameof() : Get the string name of the variable MessageAdd
                     return RedirectToAction(nameof(Index));
                 }
                 ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name", product.CategoryId);
@@ -129,6 +147,7 @@ namespace MVCDemoLabpart1.Controllers
             }
         }
 
+        //[Authorize] // Only Authenticated Users Can Access this Action Method and i can Make Role base Authorization [Authorize(Roles ="Admin")]
         // GET: WizardProducts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -240,7 +259,9 @@ namespace MVCDemoLabpart1.Controllers
             {
                 _context.Products.Remove(products);
             }
-
+            // Set TempData message
+            MessageDelete = $"Product {products?.Name} deleted...";
+            TempData.Keep(nameof(MessageDelete)); // nameof() : Get the string name of the variable MessageDelete
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -301,8 +322,6 @@ namespace MVCDemoLabpart1.Controllers
             ViewBag.TotalPages = totalPages;
             ViewBag.PageSize = pageSize;
             ViewBag.TotalProducts = totalProducts;
-
-
             return View(products);
         }
     }

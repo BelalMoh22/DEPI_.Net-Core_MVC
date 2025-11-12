@@ -1,0 +1,16 @@
+﻿@{
+	ViewData["Title"] = "Show";
+}
+
+<br>
+<a href="/Default/Index"> Go to Default</a>
+
+
+<h1>Show</h1>
+	Session    : @Context.Session.GetString("session1");
+<br />
+ 	Temp Data : @TempData["FullRequest"]
+<br />
+	View Data  : @ViewData["ViewDataVal"]
+<br />
+	View Bag   : @ViewBag.viewbagval
