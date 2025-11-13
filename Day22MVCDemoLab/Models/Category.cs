@@ -8,6 +8,7 @@ namespace MVCDemoLabpart1.Models
         [Key]
         public int CategoryId { get; set; }
 
+        [IsExist(ErrorMessage ="This CategoryName is Already Exist")] // custom validation attribute 
         [DisplayName("Category Name")]
         [Required(ErrorMessage = "Must Enter Name...")]
         [MaxLength(150 , ErrorMessage = "Name cannot be more than 150 characters...")]

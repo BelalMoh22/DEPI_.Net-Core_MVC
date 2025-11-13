@@ -312,17 +312,35 @@ namespace MVCDemoLabpart1.Controllers
             if (pageNumber > totalPages)
                 pageNumber = totalPages;
 
+            // Enhancement by IQueryable for better performance
             var products = await _context.Products
                 .OrderBy(p => p.ProductId)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .ToListAsync();
+                .ToListAsync(); // IQueryable Get only required products from sql to memory
+            // or
+            // var products = _context.Products.AsQueryable().Skip((pageNumber - 1) * pageSize).Take(pageSize); // IQueryable Get only required products from sql to memory
 
             ViewBag.CurrentPage = pageNumber;
             ViewBag.TotalPages = totalPages;
             ViewBag.PageSize = pageSize;
             ViewBag.TotalProducts = totalProducts;
+
+            //var products = await _context.Products.ToListAsync(); // IEnumerable Get all products from sql to memory
+            //products = products.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
             return View(products);
+        }
+
+        // Remote Validation
+        public IActionResult CheckPrice(decimal price)
+        {
+            if (price > 1000)
+            {
+                return Json(true);
+            }else
+            {
+                return Json(false);
+            }
         }
     }
 }

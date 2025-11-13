@@ -28,5 +28,11 @@ namespace MVCDemoLabpart1.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        [Route("smart/{id:int?}/{name:alpha?}")]
+        //[HttpGet("smart/{id:int?}/{name:alpha?}")]
+        public IActionResult GetNumber(int id , string name)
+        {
+            return Content($"Client sent number: {id} , Name is {name}");
+        }
     }
 }

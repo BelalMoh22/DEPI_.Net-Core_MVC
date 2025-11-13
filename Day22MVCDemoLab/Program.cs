@@ -22,6 +22,11 @@ namespace MVCDemoLabpart1
                 config.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout default is 20 minutes
             });
 
+            // Dependency Injection for ServiceCategory and Repository and UnitOfWork
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IServiceCategory, ServiceCategory>();
+
             var app = builder.Build();
 
             //Middleware :  it is a software that is assembled into an application pipeline to handle requests and responses.
@@ -48,6 +53,11 @@ namespace MVCDemoLabpart1
             // Any thing in middleware functions start with Map means that it is take a specified path and then execute some code.
             app.MapStaticAssets(); // Custom extension method to map static assets (access files that in the wwwroot folder)
 
+            /* MapControllerRoute : it is used to define a route for controller actions in an ASP.NET Core MVC application.
+            consists of a name and a URL pattern that determines how incoming requests are routed to specific controllers and actions.
+            name: A unique identifier for the route used to reference it in the application.
+            pattern: A URL pattern that defines the structure of the incoming request URL.
+             */
             app.MapControllerRoute( // Defines a route for controller actions
                 name: "default",
                 //pattern: "{controller=Users}/{action=Login}/{id?}")
@@ -55,6 +65,18 @@ namespace MVCDemoLabpart1
                 pattern: "{controller=Sites}/{action=Index}/{id:int?}")
                 //pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets(); // Custom extension method to associate static assets with the route
+
+            /* https://learn.microsoft.com:90/home/index/90
+             1- http Protocol Request : Client (Browser) sends Http Request to the Server (Web Application)
+             2- World Wide Web Server (IIS, Apache, Nginx, etc) : The server receives the request and forwards it to the ASP.NET Core application.
+            3- Domain : The domain name in the URL is used to identify the web application.
+            4- Domain Type : The type of domain (e.g., .com, .org, .net) is part of the URL structure.
+            5.Port Number : The port number (e.g., 80 for HTTP, 443 for HTTPS) is used to establish the connection.
+            6- Controller Name : The controller processes the request and determines the appropriate action to take.
+            7- Action Method : The action method within the controller executes the logic to handle the request.
+            8- Routing Values : Additional parameters in the URL are used to pass data to the action method.
+            9- Parameters : The parameters are extracted from the URL and passed to the action method. (after the ?)
+            */
 
             #region Custom Middleware
             //// Use

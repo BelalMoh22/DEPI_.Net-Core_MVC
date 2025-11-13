@@ -18,7 +18,12 @@ namespace MVCDemoLabpart1.Models
         [MaxLength(150, ErrorMessage = "Name cannot be more than 150 characters...")]
         public string Name { get; set; }
 
+        //[Price(ErrorMessage ="The Price Must be at Least 500")]
+        //or
+        //[CustomValidation(typeof(PriceAttribute), "ValidatePrice", ErrorMessage = "The Price Must be at Least 500")] // Static Validation
         [Required]
+        // Remote Validation
+        [Remote("CheckPrice","WizardProducts", ErrorMessage = "The Price Must be at Least 1000")] // Finction in ProductsWizard Controller
         [Range(0.01, 1000000.00, ErrorMessage = "Price must be between 0.01 and 1,000,000.00")]
         public decimal Price { get; set; }
 
