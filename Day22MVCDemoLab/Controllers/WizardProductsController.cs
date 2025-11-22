@@ -319,7 +319,7 @@ namespace MVCDemoLabpart1.Controllers
                 .Take(pageSize)
                 .ToListAsync(); // IQueryable Get only required products from sql to memory
             // or
-            // var products = _context.Products.AsQueryable().Skip((pageNumber - 1) * pageSize).Take(pageSize); // IQueryable Get only required products from sql to memory
+           // var products = _context.Products.AsQueryable().Skip((pageNumber - 1) * pageSize).Take(pageSize); // IQueryable Get only required products from sql to memory
 
             ViewBag.CurrentPage = pageNumber;
             ViewBag.TotalPages = totalPages;
@@ -328,6 +328,7 @@ namespace MVCDemoLabpart1.Controllers
 
             //var products = await _context.Products.ToListAsync(); // IEnumerable Get all products from sql to memory
             //products = products.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
             return View(products);
         }
 

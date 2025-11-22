@@ -18,9 +18,8 @@ namespace MVCDemoLabpart1.Controllers
             and ViewData and ViewBag will not go to any action method because they are only for the current request
 
             so , Session transfer data between multiple requests from Method to Method or Page to Page or from Controller to Controller
-            TempData transfer data between two requests from Method to Method
-            ViewData and ViewBag transfer data only for the current request from Method to View only
-            
+            TempData transfer data between two requests from Method to Method only in the same controller
+            ViewData and ViewBag transfer data only for the current request from Method to View only      
              */
             return RedirectToAction("Show");
         }

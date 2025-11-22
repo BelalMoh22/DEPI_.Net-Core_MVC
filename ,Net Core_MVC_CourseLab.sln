@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCDemoLabpart1", "Day22MVC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day34MVCUnitTest", "Day34MVCUnitTest\Day34MVCUnitTest.csproj", "{00094237-088B-4F7A-B5DB-B28FA2FCC750}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityDemo", "IdentityDemo\IdentityDemo.csproj", "{AB17DCF3-00FC-436F-AE62-56AF0AD311CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{00094237-088B-4F7A-B5DB-B28FA2FCC750}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00094237-088B-4F7A-B5DB-B28FA2FCC750}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00094237-088B-4F7A-B5DB-B28FA2FCC750}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB17DCF3-00FC-436F-AE62-56AF0AD311CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB17DCF3-00FC-436F-AE62-56AF0AD311CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB17DCF3-00FC-436F-AE62-56AF0AD311CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB17DCF3-00FC-436F-AE62-56AF0AD311CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
